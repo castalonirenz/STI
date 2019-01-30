@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Picker } from 'react-native';
-import { Theme } from "..//theme/style";
+import { Theme } from "../theme/style";
 import Icon from 'react-native-vector-icons/Ionicons'
 import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
 import RF from "react-native-responsive-fontsize"
 import { Button } from "../component/Button";
-class stocks extends Component {
+import { Input } from "../component/Input";
+class SalesYearly extends Component {
     state = {
         data: [],
-        PickerData: ""
+        year: ""
     }
 
 
@@ -31,7 +32,7 @@ class stocks extends Component {
 
     _onSelect = () => {
         console.log("Selected")
-       
+
         axios.post("https://castalonirenz.000webhostapp.com/selected.php", {
             selectedData: this.state.PickerData
         })
@@ -55,23 +56,20 @@ class stocks extends Component {
                     <TouchableOpacity onPress={() => this.props.navigation.toggleDrawer()}>
                         <Icon name="md-menu" size={30} color="#fff"></Icon>
                     </TouchableOpacity>
-                    <Text style={[Theme.textHeader, { marginLeft: "35%", color: "#fff" }]}>STOCKS</Text></View>
+                    <Text style={[Theme.textHeader, { marginLeft: "35%", color: "#fff" }]}>SALES</Text></View>
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{ width: "100%" }}>
 
                     <View style={styles.dataContainer}>
-                        <View style={{ width: "90%", flexDirection:"row" ,alignItems: "center", justifyContent:"space-around" }}>
-                            <Picker
-                                selectedValue={this.state.PickerData}
-                                style={{ height: 50, width: "40%", marginTop: 10 }}
-                                onValueChange={(itemValue, itemIndex)=>this.setState({PickerData: itemValue})}>
-                                <Picker.Item label="Beverages" value="Beverages" />
-                                <Picker.Item label="Gas" value="Gas" />
-                                <Picker.Item label="Laptop" value="laptop" />
-                            </Picker>
-                                <Button 
-                                style={{width: 80}}
+                        <View style={{ marginTop: 20,width: "90%", flexDirection: "row", alignItems:"center", justifyContent: "space-around" }}>
+                            <Input
+                                style={[{width: "70%", marginTop: 0,}]}
+                                placeholder="Enter Year"
+                                onChangeText={val => this.setState({ year: val })}
+                                value={this.state.password}/>
+                            <Button
+                                style={{ width: 80 }}
                                 TouchablePress={this._onSelect}>
-                                    Sort
+                                Sort
                                 </Button>
                         </View>
 
@@ -140,4 +138,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default stocks;
+export default SalesYearly;

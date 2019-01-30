@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, ActivityIndicator, AsyncStorage } from 'react-native';
 import { Theme } from "../theme/style";
 import { Button } from "../component/Button";
 import { Input } from "../component/Input";
 import { ScrollView } from 'react-native-gesture-handler';
+import axios from "axios";
 class Login extends Component {
   static navigationOptions = {
     header: null
@@ -11,14 +12,62 @@ class Login extends Component {
   state = {
     username: '',
     password: '',
+    isLoading: false,
   }
-  _onLogin = () =>{
-    this.props.navigation.navigate('user')
+  componentDidMount() {
+    console.log("Mounted")
+    AsyncStorage.getItem('@MyStorage: key')
+      .then(data => {
+        if (data !== null) {
+          let output = JSON.parse(data)
+          let username = output[0]
+          let password = output[1]
+          this.setState({username: username, password: password})
+          this._onLogin()
+        }
+      })
+  }
+  _onLogin =  () => {
+    this.setState({ isLoading: true })
+    axios.post("https://castalonirenz.000webhostapp.com/login.php", {
+      username: this.state.username,
+      password: this.state.password
+    })
+      .then(response => {
+        console.log(response)
+        if (response.data === "Success") {
+          this.props.navigation.navigate('user')
+          this.setState({ isLoading: false })
+          try {
+             let Credentials = [this.state.username, this.state.password]
+            AsyncStorage.setItem('@MyStorage: key', JSON.stringify(Credentials))
+             console.log(Credentials)
+          }
+          catch (error) {
+            alert(error)
+            console.log(error)
+          }
+        }
+        if (response.data === "Wrong Password") {
+          alert("Wrong Username/Password")
+          this.setState({ isLoading: false })
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+  _onForget = () => {
+    this.props.navigation.navigate('forget')
   }
   render() {
+    let loading
+    if (this.state.isLoading === true) {
+      loading = <ActivityIndicator size="large" color="orange" />
+    }
     return (
       <View style={Theme.Container}>
-        <ScrollView style={{ width: "100%" }} showsVerticalScrollIndicator={false}>
+        <ScrollView style={{ width: "100%" }} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
           <View style={{ alignItems: "center" }}>
             <Image
               // resizeMode="contain"
@@ -39,6 +88,8 @@ class Login extends Component {
               secureTextEntry={true} />
             <View style={{ width: "100%", alignItems: "center", marginTop: 30 }}>
               <Button TouchablePress={this._onLogin}>Log in</Button>
+              <Button TouchablePress={this._onForget} TouchableStyle={{ marginTop: 10, backgroundColor: "red" }}>Forget Password</Button>
+              {loading}
             </View>
           </View>
         </ScrollView>

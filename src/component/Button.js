@@ -2,8 +2,9 @@ import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
 import React from 'react'
 import { Theme } from "../theme/style";
 export const Button = props => (
-    <TouchableOpacity style={Theme.Button}
+    <TouchableOpacity 
         {...props}
+        style={[Theme.Button, props.TouchableStyle]}
         onPress={props.TouchablePress}
     >
         <View>
