@@ -15,13 +15,17 @@ class Sales extends Component {
 
     componentDidMount() {
 
-        axios.get("https://castalonirenz.000webhostapp.com/showStocks.php")
+        axios.get("https://nasal-shifts.000webhostapp.com/showStocks.php")
             .then(response => {
-                console.log("Mounted", response)
-                this.setState({ data: response.data })
-            })
-            .catch(error => {
-                console.log(error)
+                console.log(response.data, "ON PICKED")
+                if (response.data === "No Results Found.") {
+                    alert('No Data')
+                }
+                else {
+                    this.setState({ data: response.data })
+
+                }
+
             })
 
     }
@@ -31,12 +35,12 @@ class Sales extends Component {
 
     _onSelect = () => {
         console.log("Selected")
-       
-        axios.post("https://castalonirenz.000webhostapp.com/selected.php", {
+        console.log(this.state.PickerData)
+        axios.post("https://nasal-shifts.000webhostapp.com/selected.php", {
             selectedData: this.state.PickerData
         })
             .then(response => {
-                console.log(response, "ON PICKED")
+                console.log(response, "ON SELECT")
                 if (response.data === "No Results Found.") {
                     alert('No Item')
                 }
@@ -59,28 +63,28 @@ class Sales extends Component {
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{ width: "100%" }}>
 
                     <View style={styles.dataContainer}>
-                        <View style={{ width: "90%", flexDirection:"row" ,alignItems: "center", justifyContent:"space-around" }}>
+                        <View style={{ width: "90%", flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
                             <Picker
                                 selectedValue={this.state.PickerData}
                                 style={{ height: 50, width: "40%", marginTop: 10 }}
-                                onValueChange={(itemValue, itemIndex)=>this.setState({PickerData: itemValue})}>
-                                <Picker.Item label="January" value="1" />
-                                <Picker.Item label="February" value="2" />
-                                <Picker.Item label="March" value="3" />
-                                <Picker.Item label="April" value="4" />
-                                <Picker.Item label="May" value="5" />
-                                <Picker.Item label="June" value="6" />
-                                <Picker.Item label="July" value="7" />
-                                <Picker.Item label="August" value="8" />
-                                <Picker.Item label="September" value="9" />
-                                <Picker.Item label="October" value="10" />
-                                <Picker.Item label="November" value="11" />
-                                <Picker.Item label="December" value="12" />
+                                onValueChange={(itemValue, itemIndex) => this.setState({ PickerData: itemValue })}>
+                                <Picker.Item label="January" value="January" />
+                                <Picker.Item label="February" value="February" />
+                                <Picker.Item label="March" value="March" />
+                                <Picker.Item label="April" value="April" />
+                                <Picker.Item label="May" value="May" />
+                                <Picker.Item label="June" value="June" />
+                                <Picker.Item label="July" value="July" />
+                                <Picker.Item label="August" value="August" />
+                                <Picker.Item label="September" value="September" />
+                                <Picker.Item label="October" value="October" />
+                                <Picker.Item label="November" value="November" />
+                                <Picker.Item label="December" value="December" />
                             </Picker>
-                                <Button 
-                                style={{width: 80}}
+                            <Button
+                                style={{ width: 80 }}
                                 TouchablePress={this._onSelect}>
-                                    Sort
+                                Sort
                                 </Button>
                         </View>
 

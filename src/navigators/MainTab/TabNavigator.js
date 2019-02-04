@@ -10,7 +10,7 @@ const MainTab = createBottomTabNavigator({
         navigationOptions:{
             tabBarLabel:"Monthly",
             tabBarIcon: ({tintColor}) =>(
-            <Icon name={Platform.OS === "ios" ? "ios-trending-up" : "md-trending-up"} size={30} color={tintColor}/>
+            <Icon name={Platform.OS === "ios" ? "ios-time" : "md-time"} size={30} color={tintColor}/>
             )
         }
     },

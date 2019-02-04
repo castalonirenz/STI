@@ -22,40 +22,79 @@ class Login extends Component {
           let output = JSON.parse(data)
           let username = output[0]
           let password = output[1]
-          this.setState({username: username, password: password})
+          this.setState({ username: username, password: password })
           this._onLogin()
         }
       })
   }
-  _onLogin =  () => {
+  _onLogin = () => {
     this.setState({ isLoading: true })
-    axios.post("https://castalonirenz.000webhostapp.com/login.php", {
-      username: this.state.username,
-      password: this.state.password
+    fetch('https://nasal-shifts.000webhostapp.com/login.php', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: this.state.username,
+        password: this.state.password
+      }),
     })
       .then(response => {
         console.log(response)
-        if (response.data === "Success") {
+        if (response._bodyText === "Success") {
           this.props.navigation.navigate('user')
           this.setState({ isLoading: false })
           try {
-             let Credentials = [this.state.username, this.state.password]
+            let Credentials = [this.state.username, this.state.password]
             AsyncStorage.setItem('@MyStorage: key', JSON.stringify(Credentials))
-             console.log(Credentials)
+            console.log(Credentials)
           }
           catch (error) {
             alert(error)
             console.log(error)
+            this.setState({ isLoading: false })
           }
         }
-        if (response.data === "Wrong Password") {
+        if (response._bodyText === "Wrong Password") {
           alert("Wrong Username/Password")
           this.setState({ isLoading: false })
         }
       })
       .catch(error => {
         console.log(error)
+        this.setState({ isLoading: false })
       })
+    // axios.post("https://148.66.136.151/login.php", {
+    //   // headers:{'Content-Type': 'application/json'},  
+    // username: this.state.username,
+    //   password: this.state.password
+    // })
+    //   .then(response => {
+    //     console.log(response)
+    //     if (response.data === "Success") {
+    //       this.props.navigation.navigate('user')
+    //       this.setState({ isLoading: false })
+    //       try {
+    //          let Credentials = [this.state.username, this.state.password]
+    //         AsyncStorage.setItem('@MyStorage: key', JSON.stringify(Credentials))
+    //          console.log(Credentials)
+    //       }
+    //       catch (error) {
+    //         alert(error)
+    //         console.log(error)
+    //         this.setState({ isLoading: false })
+    //       }
+    //     }
+    //     if (response.data === "Wrong Password") {
+    //       alert("Wrong Username/Password")
+    //       this.setState({ isLoading: false })
+    //     }
+    //   })
+    //   .catch(error => {
+    //     console.log(error)
+    //     this.setState({ isLoading: false })
+    //   })
   }
   _onForget = () => {
     this.props.navigation.navigate('forget')

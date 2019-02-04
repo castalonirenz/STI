@@ -2,7 +2,8 @@ import {
   createDrawerNavigator,
   createAppContainer,
   DrawerItems,
-  NavigationActions
+  NavigationActions,
+  withNavigation
 } from "react-navigation";
 import React, { Component } from "react";
 import {
@@ -16,19 +17,15 @@ import {
   AsyncStorage
 } from "react-native";
 import { SalesScreen, StockScreen } from "../../screens/index";
-import { MainTabContainer } from "../MainTab/TabNavigator";
-
-_onLogout = () => {
+import { MainTabContainer} from "../MainTab/TabNavigator";
+import { ReportTabContainer } from "../MainTab/ReportTab";
+ _onLogout = () => {
   let empty = []
-  try {
+
     AsyncStorage.clear();
     console.log("Clear")
-    
-  }
-  catch (error) {
-    alert(error)
-    console.log(error)
-  }
+    props.navigation.navigate('login')
+ 
 }
 const CustomDrawerComponent = props => (
 
@@ -49,7 +46,7 @@ const CustomDrawerComponent = props => (
     <ScrollView>
       <DrawerItems
         {...props} />
-      <TouchableOpacity onPress={this._onLogout}>
+      <TouchableOpacity onPress={()=>props.navigation.navigate('login')}>
         <Text>Logout</Text>
       </TouchableOpacity>
     </ScrollView>
@@ -66,7 +63,7 @@ const Drawer = createDrawerNavigator(
     }
     ,
     "Reports": {
-      screen: SalesScreen
+      screen: ReportTabContainer
     },
     // "Logout":{
     //   screen: SalesScreen

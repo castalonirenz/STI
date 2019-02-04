@@ -16,14 +16,19 @@ class SalesYearly extends Component {
 
     componentDidMount() {
 
-        axios.get("https://castalonirenz.000webhostapp.com/showStocks.php")
+        axios.get("https://nasal-shifts.000webhostapp.com/showStocks.php")
             .then(response => {
-                console.log("Mounted", response)
-                this.setState({ data: response.data })
+                console.log(response.data, "ON PICKED")
+                if (response.data === "No Results Found.") {
+                    alert('No Data')
+                }
+                else {
+                    this.setState({ data: response.data })
+
+                }
+
             })
-            .catch(error => {
-                console.log(error)
-            })
+
 
     }
     componentDidUpdate() {
@@ -33,8 +38,8 @@ class SalesYearly extends Component {
     _onSelect = () => {
         console.log("Selected")
 
-        axios.post("https://castalonirenz.000webhostapp.com/selected.php", {
-            selectedData: this.state.PickerData
+        axios.post("https://nasal-shifts.000webhostapp.com/selected.php", {
+            selectedData: this.state.year
         })
             .then(response => {
                 console.log(response, "ON PICKED")
@@ -60,14 +65,14 @@ class SalesYearly extends Component {
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{ width: "100%" }}>
 
                     <View style={styles.dataContainer}>
-                        <View style={{ marginTop: 20,width: "90%", flexDirection: "row", alignItems:"center", justifyContent: "space-around" }}>
+                        <View style={{ marginTop: 20, width: "90%", flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
                             <Input
-                                style={[{width: "70%", marginTop: 0,}]}
+                                style={[{ width: "50%", marginTop: 0, }]}
                                 placeholder="Enter Year"
                                 onChangeText={val => this.setState({ year: val })}
-                                value={this.state.password}/>
+                                value={this.state.year} />
                             <Button
-                                style={{ width: 80 }}
+                                TouchableStyle={{ width: "40%" }}
                                 TouchablePress={this._onSelect}>
                                 Sort
                                 </Button>
