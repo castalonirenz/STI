@@ -18,7 +18,7 @@ export default class Forget extends Component {
     }
     _onUpdate = () => {
         this.setState({ isLoading: true })
-        axios.post("nasal-shifts.000webhostapp.com/ForgetPass.php", {
+        axios.post("https://nasal-shifts.000webhostapp.com/ForgetPass.php", {
             question: this.state.question,
             secretAns: this.state.secretAnswer,
         })
@@ -39,7 +39,7 @@ export default class Forget extends Component {
     }
     _onCheck = () => {
         this.setState({ isLoading: true })
-        axios.post("nasal-shifts.000webhostapp.com/checkUsername.php", {
+        axios.post("https://nasal-shifts.000webhostapp.com/checkUsername.php", {
             username: this.state.username
         })
             .then(response => {

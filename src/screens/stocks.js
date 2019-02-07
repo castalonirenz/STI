@@ -9,7 +9,9 @@ import { Button } from "../component/Button";
 class stocks extends Component {
     state = {
         data: [],
-        PickerData: ""
+        PickerData: "",
+        category: [],
+        selectedStock: []
     }
 
 
@@ -28,6 +30,18 @@ class stocks extends Component {
 
         })
 
+        axios.get("https://nasal-shifts.000webhostapp.com/category.php")
+        .then(response => {
+            console.log(response.data, "ON PICKED")
+            if (response.data === "No Results Found.") {
+                alert('No Data')
+            }
+            else {
+                this.setState({ category: response.data })
+
+            }
+
+        })
 
     }
     componentDidUpdate() {
@@ -37,7 +51,7 @@ class stocks extends Component {
     _onSelect = () => {
         console.log("Selected")
        
-        axios.post("https://nasal-shifts.000webhostapp.com/selected.php", {
+        axios.post("https://nasal-shifts.000webhostapp.com/selectedStock.php", {
             selectedData: this.state.PickerData
         })
             .then(response => {
@@ -54,6 +68,12 @@ class stocks extends Component {
     }
 
     render() {
+        let PickerItem
+        if(this.state.category.length > 0){
+            PickerItem = this.state.category.map((items, index)=>(
+                <Picker.Item key={index} label={items.category} value={items.category} /> 
+            ))
+        }
         return (
             <View style={{ flex: 1 }}>
                 <View style={Theme.header}>
@@ -69,9 +89,8 @@ class stocks extends Component {
                                 selectedValue={this.state.PickerData}
                                 style={{ height: 50, width: "40%", marginTop: 10 }}
                                 onValueChange={(itemValue, itemIndex)=>this.setState({PickerData: itemValue})}>
-                                <Picker.Item label="Beverages" value="Beverages" />
-                                <Picker.Item label="Gas" value="Gas" />
-                                <Picker.Item label="Laptop" value="laptop" />
+                                {/* <Picker.Item label="Beverages" value="Beverages" /> */}
+                                {PickerItem}
                             </Picker>
                                 <Button 
                                 style={{width: 80}}

@@ -8,21 +8,21 @@ const MainTab = createBottomTabNavigator({
 
         screen: SalesScreen,
         navigationOptions:{
-            tabBarLabel:"Monthly",
+            tabBarLabel:"Welcome",
             tabBarIcon: ({tintColor}) =>(
             <Icon name={Platform.OS === "ios" ? "ios-time" : "md-time"} size={30} color={tintColor}/>
             )
         }
     },
-    Yearly:{
-        screen: SalesYearlyScreen ,
-        navigationOptions:{
-            tabBarLabel:"Yearly",  
-            tabBarIcon:({tintColor}) =>(
-                <Icon name={Platform.OS === "ios" ? "ios-trending-up" : "md-trending-up"} size={30} color={tintColor}/>
-            )
-        }
-    }
+    // Yearly:{
+    //     screen: SalesYearlyScreen ,
+    //     navigationOptions:{
+    //         tabBarLabel:"Yearly",  
+    //         tabBarIcon:({tintColor}) =>(
+    //             <Icon name={Platform.OS === "ios" ? "ios-trending-up" : "md-trending-up"} size={30} color={tintColor}/>
+    //         )
+    //     }
+    // }
 },{
     tabBarOptions:{
         activeBackgroundColor:"#000",
