@@ -14,16 +14,16 @@ const MainTab = createBottomTabNavigator({
             )
         }
     },
-    Replace:{
-        screen: ReplaceScreen ,
-        navigationOptions:{
-            tabBarLabel:"Replace",  
-            tabBarIcon:({tintColor}) =>(
-                <Icon name={Platform.OS === "ios" ? "ios-shuffle" : "md-shuffle"} size={30} color={tintColor}/>
-            )
-        }
-    }
-    ,
+    // Replace:{
+    //     screen: ReplaceScreen ,
+    //     navigationOptions:{
+    //         tabBarLabel:"Replace",  
+    //         tabBarIcon:({tintColor}) =>(
+    //             <Icon name={Platform.OS === "ios" ? "ios-shuffle" : "md-shuffle"} size={30} color={tintColor}/>
+    //         )
+    //     }
+    // }
+    // ,
     Returns:{
         screen: ReturnsScreen ,
         navigationOptions:{

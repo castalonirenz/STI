@@ -6,7 +6,7 @@ import Forget from './Forget'
 import Replace from './Replace'
 import Transaction from './Transaction'
 import Returns from './Returns'
-
+import Critical from './CriticalLevel'
 export const LoginScreen = Login
 export const SalesScreen = Sales
 export const StockScreen = Stocks
@@ -15,3 +15,4 @@ export const ForgetScreen = Forget
 export const ReplaceScreen = Replace
 export const TransactionScreen = Transaction
 export const ReturnsScreen = Returns
+export const CriticalScreen = Critical

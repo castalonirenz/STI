@@ -16,7 +16,7 @@ import {
   TouchableOpacity,
   AsyncStorage
 } from "react-native";
-import { SalesScreen, StockScreen } from "../../screens/index";
+import { SalesScreen, StockScreen, CriticalScreen } from "../../screens/index";
 import { MainTabContainer} from "../MainTab/TabNavigator";
 import { ReportTabContainer } from "../MainTab/ReportTab";
  _onLogout = () => {
@@ -65,6 +65,9 @@ const Drawer = createDrawerNavigator(
     "Reports": {
       screen: ReportTabContainer
     },
+    "Critical Level":{
+      screen: CriticalScreen
+    }
     // "Logout":{
     //   screen: SalesScreen
     // }
