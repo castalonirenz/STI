@@ -31,7 +31,19 @@ class Returns extends Component {
 
     }
     componentDidUpdate() {
-        console.log('Updating Component')
+        axios.get("http://itsdatabase.info/showReturn.php")
+        .then(response => {
+            console.log(response.data, "ON PICKED")
+            if (response.data === "No Results Found.") {
+                alert('No Data')
+            }
+            else {
+                this.setState({ data: response.data })
+
+            }
+
+        })
+
     }
 
     _onSelect = () => {

@@ -60,7 +60,21 @@ class Sales extends Component {
        
     }
 
+    _onRefresh = () =>{
+        
+        axios.get("http://itsdatabase.info/showTransaction.php")
+            .then(response => {
+                console.log(response, "ON PICKED")
+                if (response.data === "No Results Found.") {
+                    alert('No Data')
+                }
+                else {
+                    this.setState({ data: response.data })
 
+                }
+
+            })
+    }
 
     render() {
         return (
@@ -130,6 +144,10 @@ class Sales extends Component {
 
                         <Button TouchablePress={this._onSelect} TouchableStyle={{ marginTop: 20 }}>
                             Sort
+                            </Button>
+
+                            <Button TouchablePress={this._onRefresh} TouchableStyle={{ marginTop: 20 }}>
+                            Refresh
                             </Button>
                         {this.state.data.map((items, key) => (
                             <View key={key} style={styles.data}>

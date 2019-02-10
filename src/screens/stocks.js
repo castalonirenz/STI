@@ -18,6 +18,37 @@ class stocks extends Component {
     componentDidMount() {
 
         axios.get("http://itsdatabase.info/showStocks.php")
+            .then(response => {
+                console.log(response.data, "ON PICKED")
+                if (response.data === "No Results Found.") {
+                    alert('No Data')
+                }
+                else {
+                    this.setState({ data: response.data })
+
+                }
+
+            })
+
+        axios.get("http://itsdatabase.info/category.php")
+            .then(response => {
+                console.log(response.data, "ON PICKED")
+                if (response.data === "No Results Found.") {
+                    alert('No Data')
+                }
+                else {
+                    this.setState({ category: response.data })
+
+                }
+
+            })
+
+    }
+    componentDidUpdate() {
+        console.log('Updating Component')
+    }
+    _onRefresh =() =>{
+        axios.get("http://itsdatabase.info/showStocks.php")
         .then(response => {
             console.log(response.data, "ON PICKED")
             if (response.data === "No Results Found.") {
@@ -30,7 +61,7 @@ class stocks extends Component {
 
         })
 
-        axios.get("http://itsdatabase.info/category.php")
+    axios.get("http://itsdatabase.info/category.php")
         .then(response => {
             console.log(response.data, "ON PICKED")
             if (response.data === "No Results Found.") {
@@ -44,14 +75,10 @@ class stocks extends Component {
         })
 
     }
-    componentDidUpdate() {
-        console.log('Updating Component')
-    }
-
     _onSelect = () => {
         console.log("Selected")
-       
-        axios.post("https://itsdatabase.info/selectedStock.php", {
+
+        axios.post("http://itsdatabase.info/selectedStock.php", {
             selectedData: this.state.PickerData
         })
             .then(response => {
@@ -69,9 +96,9 @@ class stocks extends Component {
 
     render() {
         let PickerItem
-        if(this.state.category.length > 0){
-            PickerItem = this.state.category.map((items, index)=>(
-                <Picker.Item key={index} label={items.category} value={items.category} /> 
+        if (this.state.category.length > 0) {
+            PickerItem = this.state.category.map((items, index) => (
+                <Picker.Item key={index} label={items.category} value={items.category} />
             ))
         }
         return (
@@ -84,21 +111,25 @@ class stocks extends Component {
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{ width: "100%" }}>
 
                     <View style={styles.dataContainer}>
-                        <View style={{ width: "90%", flexDirection:"row" ,alignItems: "center", justifyContent:"space-around" }}>
+                        <View style={{ width: "90%", flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
                             <Picker
                                 selectedValue={this.state.PickerData}
                                 style={{ height: 50, width: "40%", marginTop: 10 }}
-                                onValueChange={(itemValue, itemIndex)=>this.setState({PickerData: itemValue})}>
+                                onValueChange={(itemValue, itemIndex) => this.setState({ PickerData: itemValue })}>
                                 {/* <Picker.Item label="Beverages" value="Beverages" /> */}
                                 {PickerItem}
                             </Picker>
-                                <Button 
-                                style={{width: 80}}
+                            <Button
+                                style={{ width: 80 }}
                                 TouchablePress={this._onSelect}>
-                                    Sort
+                                Sort
                                 </Button>
                         </View>
-
+                        <Button
+                            style={{ width: 80 }}
+                            TouchablePress={this._onRefresh}>
+                            Refresh
+                                </Button>
                         {this.state.data.map((items, key) => (
                             <View key={key} style={styles.data}>
 

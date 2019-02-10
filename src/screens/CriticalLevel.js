@@ -16,14 +16,16 @@ class CriticalLevel extends Component {
 
 
     componentDidMount() {
-
+    console.log("Mounted Critical Level")
         axios.get("http://itsdatabase.info/criticalLevel.php")
         .then(response => {
+            console.log(response, "Response")
             console.log(response.data, "ON PICKED")
             if (response.data === "No Results Found.") {
                 alert('No Product in Critical ')
             }
             else {
+                console.log('Setting data')
                 this.setState({ data: response.data })
 
             }
@@ -35,24 +37,12 @@ class CriticalLevel extends Component {
         console.log('Updating Component')
     }
 
-    _onSelect = () => {
-        console.log("Selected")
-       
-        axios.post("http://itsdatabase.info/criticalLevel.php", {
-            selectedData: this.state.PickerData
-        })
-            .then(response => {
-                console.log(response, "ON PICKED")
-                if (response.data === "No Results Found.") {
-                    alert('No Item')
-                }
-                else {
-                    this.setState({ data: response.data })
+        _onCheck =()=>{
+            console.log(this.state.data)
+        }
 
-                }
-
-            })
-    }
+    
+    
 
     render() {
         let PickerItem
@@ -71,8 +61,7 @@ class CriticalLevel extends Component {
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{ width: "100%" }}>
 
                     <View style={styles.dataContainer}>
-                        
-
+                    
                         {this.state.data.map((items, key) => (
                             <View key={key} style={styles.data}>
 
