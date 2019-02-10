@@ -16,7 +16,7 @@ class SalesYearly extends Component {
 
     componentDidMount() {
 
-        axios.get("https://nasal-shifts.000webhostapp.com/showStocks.php")
+        axios.get("http://itsdatabase.info/showStocks.php")
             .then(response => {
                 console.log(response.data, "ON PICKED")
                 if (response.data === "No Results Found.") {
@@ -38,7 +38,7 @@ class SalesYearly extends Component {
     _onSelect = () => {
         console.log("Selected")
 
-        axios.post("https://nasal-shifts.000webhostapp.com/selected.php", {
+        axios.post("http://itsdatabase.info/selected.php", {
             selectedData: this.state.year
         })
             .then(response => {

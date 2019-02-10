@@ -15,7 +15,7 @@ class Replace extends Component {
 
     componentDidMount() {
 
-        axios.get("https://nasal-shifts.000webhostapp.com/showReplace.php")
+        axios.get("http://itsdatabase.info/showReplace.php")
         .then(response => {
             console.log(response.data, "ON PICKED")
             if (response.data === "No Results Found.") {

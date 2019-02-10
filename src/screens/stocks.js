@@ -17,7 +17,7 @@ class stocks extends Component {
 
     componentDidMount() {
 
-        axios.get("https://nasal-shifts.000webhostapp.com/showStocks.php")
+        axios.get("http://itsdatabase.info/showStocks.php")
         .then(response => {
             console.log(response.data, "ON PICKED")
             if (response.data === "No Results Found.") {
@@ -30,7 +30,7 @@ class stocks extends Component {
 
         })
 
-        axios.get("https://nasal-shifts.000webhostapp.com/category.php")
+        axios.get("http://itsdatabase.info/category.php")
         .then(response => {
             console.log(response.data, "ON PICKED")
             if (response.data === "No Results Found.") {
@@ -51,7 +51,7 @@ class stocks extends Component {
     _onSelect = () => {
         console.log("Selected")
        
-        axios.post("https://nasal-shifts.000webhostapp.com/selectedStock.php", {
+        axios.post("https://itsdatabase.info/selectedStock.php", {
             selectedData: this.state.PickerData
         })
             .then(response => {

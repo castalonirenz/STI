@@ -29,7 +29,7 @@ class Login extends Component {
   }
   _onLogin = () => {
     this.setState({ isLoading: true })
-    fetch('https://148.66.136.151/login.php', {
+    fetch('http://itsdatabase.info/login.php', {
       method: 'POST',
       headers: {
         Accept: 'application/json',

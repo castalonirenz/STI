@@ -15,7 +15,7 @@ class Transaction extends Component {
 
     componentDidMount() {
 
-        axios.get("https://nasal-shifts.000webhostapp.com/showTransaction.php")
+        axios.get("http://itsdatabase.info/showTransaction.php")
         .then(response => {
             console.log(response.data, "ON PICKED")
             if (response.data === "No Results Found.") {
@@ -37,7 +37,7 @@ class Transaction extends Component {
     _onSelect = () => {
         console.log("Selected")
        
-        axios.post("https://nasal-shifts.000webhostapp.com/showTransaction.php", {
+        axios.post("http://itsdatabase.info/showTransaction.php", {
             selectedData: this.state.PickerData
         })
             .then(response => {

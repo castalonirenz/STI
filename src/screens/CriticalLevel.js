@@ -17,27 +17,14 @@ class CriticalLevel extends Component {
 
     componentDidMount() {
 
-        axios.get("https://nasal-shifts.000webhostapp.com/showStocks.php")
+        axios.get("http://itsdatabase.info/criticalLevel.php")
         .then(response => {
             console.log(response.data, "ON PICKED")
             if (response.data === "No Results Found.") {
-                alert('No Data')
+                alert('No Product in Critical ')
             }
             else {
                 this.setState({ data: response.data })
-
-            }
-
-        })
-
-        axios.get("https://nasal-shifts.000webhostapp.com/category.php")
-        .then(response => {
-            console.log(response.data, "ON PICKED")
-            if (response.data === "No Results Found.") {
-                alert('No Data')
-            }
-            else {
-                this.setState({ category: response.data })
 
             }
 
@@ -51,7 +38,7 @@ class CriticalLevel extends Component {
     _onSelect = () => {
         console.log("Selected")
        
-        axios.post("https://nasal-shifts.000webhostapp.com/criticalLevel.php", {
+        axios.post("http://itsdatabase.info/criticalLevel.php", {
             selectedData: this.state.PickerData
         })
             .then(response => {
@@ -80,24 +67,11 @@ class CriticalLevel extends Component {
                     <TouchableOpacity onPress={() => this.props.navigation.toggleDrawer()}>
                         <Icon name="md-menu" size={30} color="#fff"></Icon>
                     </TouchableOpacity>
-                    <Text style={[Theme.textHeader, { marginLeft: "35%", color: "#fff" }]}>STOCKS</Text></View>
+                    <Text style={[Theme.textHeader, { marginLeft: "25%", color: "#fff" }]}>Stock in Critical</Text></View>
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={{ width: "100%" }}>
 
                     <View style={styles.dataContainer}>
-                        <View style={{ width: "90%", flexDirection:"row" ,alignItems: "center", justifyContent:"space-around" }}>
-                            <Picker
-                                selectedValue={this.state.PickerData}
-                                style={{ height: 50, width: "40%", marginTop: 10 }}
-                                onValueChange={(itemValue, itemIndex)=>this.setState({PickerData: itemValue})}>
-                                {/* <Picker.Item label="Beverages" value="Beverages" /> */}
-                                {PickerItem}
-                            </Picker>
-                                <Button 
-                                style={{width: 80}}
-                                TouchablePress={this._onSelect}>
-                                    Sort
-                                </Button>
-                        </View>
+                        
 
                         {this.state.data.map((items, key) => (
                             <View key={key} style={styles.data}>

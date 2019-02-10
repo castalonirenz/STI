@@ -18,7 +18,7 @@ export default class Forget extends Component {
     }
     _onUpdate = () => {
         this.setState({ isLoading: true })
-        axios.post("https://148.66.136.151/ForgetPass.php", {
+        axios.post("http://itsdatabase.info/ForgetPass.php", {
             question: this.state.question,
             secretAns: this.state.secretAnswer,
         })
@@ -39,7 +39,7 @@ export default class Forget extends Component {
     }
     _onCheck = () => {
         this.setState({ isLoading: true })
-        axios.post("https://itdatabase.net/checkUsername.php", {
+        axios.post("http://itsdatabase.info/checkUsername.php", {
             username: this.state.username
         })
             .then(response => {
