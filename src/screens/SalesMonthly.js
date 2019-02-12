@@ -7,7 +7,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import RF from "react-native-responsive-fontsize"
 import { Button } from "../component/Button";
 import DatePicker from 'react-native-datepicker'
-import Tts from 'react-native-tts';
+
 var moment = require('moment')
 class Sales extends Component {
     state = {
@@ -78,23 +78,10 @@ class Sales extends Component {
     }
 
     render() {
-        let Total = []
-        this.state.data.map((items, key) => (
+        let Total =[]
+        this.state.data.map((items, index)=>(
             Total = items.total
         ))
-        
-        if(Total.length > 0){
-            Tts.getInitStatus().then(() => {
-                Tts.setDefaultPitch(0.6)
-                Tts.setDefaultPitch(0.0)
-                Tts.speak("Your total sales is: "+Total)
-            }, (err) => {
-                if (err.code === 'no_engine') {
-                    Tts.requestInstallEngine();
-                }
-            });
-        }
-      
         console.log(Total)
         return (
             <View style={{ flex: 1 }}>
