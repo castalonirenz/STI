@@ -96,10 +96,12 @@ class stocks extends Component {
 
     render() {
         let PickerItem
+      
         if (this.state.category.length > 0) {
             PickerItem = this.state.category.map((items, index) => (
                 <Picker.Item key={index} label={items.category} value={items.category} />
             ))
+      
         }
         return (
             <View style={{ flex: 1 }}>
@@ -131,7 +133,7 @@ class stocks extends Component {
                             Refresh
                                 </Button>
                         {this.state.data.map((items, key) => (
-                            <View key={key} style={styles.data}>
+                            <View key={key} style={[styles.data, {borderLeftColor:items.stocks < 1 ? "red" : "black"}]}>
 
                                 <View style={{ flexDirection: "row" }}>
                                     <Text style={Theme.textHeader}>Barcode: </Text>
@@ -139,7 +141,7 @@ class stocks extends Component {
                                 </View>
                                 <View style={{ flexDirection: "row" }}>
                                     <Text style={Theme.textHeader}>Stock: </Text>
-                                    <Text style={Theme.textHeader}> {items.stocks} </Text>
+                                    <Text style={[Theme.textHeader,{color:items.stocks < 1 ? "red" : "black"}]}> {items.stocks} </Text>
                                 </View>
                                 <View style={{ flexDirection: "row" }}>
                                     <Text style={styles.text}>Name: </Text>

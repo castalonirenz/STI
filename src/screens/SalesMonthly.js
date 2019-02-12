@@ -7,13 +7,14 @@ import { ScrollView } from 'react-native-gesture-handler';
 import RF from "react-native-responsive-fontsize"
 import { Button } from "../component/Button";
 import DatePicker from 'react-native-datepicker'
+import Tts from 'react-native-tts';
 var moment = require('moment')
 class Sales extends Component {
     state = {
         data: [],
         PickerData: "",
-        dateOne: "2011-05-15",
-        dateTwo: "2019-01-20",
+        dateOne: "2019/01/01s",
+        dateTwo: "2019/01/01",
         isDateTimePickerVisible: false,
         isDateTimePickerVisibleTwo: false,
     }
@@ -53,15 +54,15 @@ class Sales extends Component {
                 }
                 else {
                     this.setState({ data: response.data })
-
+                    alert('Sorting Done.')
                 }
 
             })
-       
+
     }
 
-    _onRefresh = () =>{
-        
+    _onRefresh = () => {
+
         axios.get("http://itsdatabase.info/showTransaction.php")
             .then(response => {
                 console.log(response, "ON PICKED")
@@ -70,13 +71,31 @@ class Sales extends Component {
                 }
                 else {
                     this.setState({ data: response.data })
-
+                    alert('Data Refreshed.')
                 }
 
             })
     }
 
     render() {
+        let Total = []
+        this.state.data.map((items, key) => (
+            Total = items.total
+        ))
+        
+        if(Total.length > 0){
+            Tts.getInitStatus().then(() => {
+                Tts.setDefaultPitch(0.6)
+                Tts.setDefaultPitch(0.0)
+                Tts.speak("Your total sales is: "+Total)
+            }, (err) => {
+                if (err.code === 'no_engine') {
+                    Tts.requestInstallEngine();
+                }
+            });
+        }
+      
+        console.log(Total)
         return (
             <View style={{ flex: 1 }}>
                 <View style={Theme.header}>
@@ -93,7 +112,7 @@ class Sales extends Component {
                             date={this.state.dateOne}
                             mode="date"
                             placeholder="select date"
-                            format="YYYY-MM-DD"
+                            format="YYYY/MM/DD"
                             minDate="2000-01-01"
                             maxDate="2099-01-01"
                             confirmBtnText="Confirm"
@@ -120,7 +139,7 @@ class Sales extends Component {
                             date={this.state.dateTwo}
                             mode="date"
                             placeholder="select date"
-                            format="YYYY-MM-DD"
+                            format="YYYY/MM/DD"
                             minDate="2000-01-01"
                             maxDate="2099-01-01"
                             confirmBtnText="Confirm"
@@ -146,9 +165,10 @@ class Sales extends Component {
                             Sort
                             </Button>
 
-                            <Button TouchablePress={this._onRefresh} TouchableStyle={{ marginTop: 20 }}>
+                        <Button TouchablePress={this._onRefresh} TouchableStyle={{ marginTop: 20 }}>
                             Refresh
                             </Button>
+                        <Text style={{ fontSize: 26, fontWeight: 'bold', color: "#000" }}>Total Sales: {Total}</Text>
                         {this.state.data.map((items, key) => (
                             <View key={key} style={styles.data}>
 

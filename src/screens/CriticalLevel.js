@@ -34,7 +34,21 @@ class CriticalLevel extends Component {
 
     }
     componentDidUpdate() {
-        console.log('Updating Component')
+        console.log("Mounted Critical Level")
+        axios.get("http://itsdatabase.info/criticalLevel.php")
+        .then(response => {
+            console.log(response, "Response")
+            console.log(response.data, "ON PICKED")
+            if (response.data === "No Results Found.") {
+                alert('No Product in Critical ')
+            }
+            else {
+                console.log('Setting data')
+                this.setState({ data: response.data })
+
+            }
+
+        })
     }
 
         _onCheck =()=>{
@@ -70,8 +84,8 @@ class CriticalLevel extends Component {
                                     <Text style={Theme.textHeader}> {items.code} </Text>
                                 </View>
                                 <View style={{ flexDirection: "row" }}>
-                                    <Text style={Theme.textHeader}>Stock: </Text>
-                                    <Text style={Theme.textHeader}> {items.stocks} </Text>
+                                    <Text style={[Theme.textHeader, {color:"red"}]}>Stock: </Text>
+                                    <Text style={[Theme.textHeader, {color:"red"}]}> {items.stocks} </Text>
                                 </View>
                                 <View style={{ flexDirection: "row" }}>
                                     <Text style={styles.text}>Name: </Text>
@@ -110,7 +124,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         paddingLeft: 20,
         borderLeftWidth: 5,
-        borderLeftColor: "#000",
+        borderLeftColor: "red",
         marginBottom: 5,
 
     },

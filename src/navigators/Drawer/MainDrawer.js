@@ -56,7 +56,7 @@ const CustomDrawerComponent = props => (
 const Drawer = createDrawerNavigator(
   {
     'Sales': {
-      screen: MainTabContainer
+      screen: SalesScreen
     },
     "Stocks": {
       screen: StockScreen

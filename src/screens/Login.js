@@ -5,6 +5,7 @@ import { Button } from "../component/Button";
 import { Input } from "../component/Input";
 import { ScrollView } from 'react-native-gesture-handler';
 import axios from "axios";
+import Tts from 'react-native-tts';
 class Login extends Component {
   static navigationOptions = {
     header: null
@@ -16,7 +17,17 @@ class Login extends Component {
   }
   componentDidMount() {
     console.log("Mounted")
-    AsyncStorage.getItem('@MyStorage: key')
+    Tts.getInitStatus().then(() => {
+      Tts.setDefaultPitch(0.6)
+      Tts.setDefaultPitch(0.0)
+      Tts.speak('Hi, Welcome to the monitoring application, Please login.')
+    }, (err) => {
+      if (err.code === 'no_engine') {
+        Tts.requestInstallEngine();
+      }
+    });
+
+    Tts.addEventListener('tts-finish', (event) => AsyncStorage.getItem('@MyStorage: key')
       .then(data => {
         if (data !== null) {
           let output = JSON.parse(data)
@@ -25,8 +36,10 @@ class Login extends Component {
           this.setState({ username: username, password: password })
           this._onLogin()
         }
-      })
+      }))
+
   }
+
   _onLogin = () => {
     this.setState({ isLoading: true })
     fetch('http://itsdatabase.info/login.php', {
@@ -65,7 +78,7 @@ class Login extends Component {
         console.log(error)
         this.setState({ isLoading: false })
       })
-  
+
   }
   _onForget = () => {
     this.props.navigation.navigate('forget')
