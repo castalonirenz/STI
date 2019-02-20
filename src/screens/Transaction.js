@@ -77,14 +77,13 @@ class Transaction extends Component {
                     <View style={styles.dataContainer}>
                         {this.state.data.map((items, key) => (
                             <View key={key} style={styles.data}>
-
-                                <View style={{ flexDirection: "row" }}>
-                                    <Text style={Theme.textHeader}>ID: </Text>
-                                    <Text style={Theme.textHeader}> {items.id} </Text>
-                                </View>
                                 <View style={{ flexDirection: "row" }}>
                                     <Text style={Theme.textHeader}>Invoice: </Text>
                                     <Text style={Theme.textHeader}> {items.invoice} </Text>
+                                </View>
+                                <View style={{ flexDirection: "row" }}>
+                                    <Text style={styles.text}>ID: </Text>
+                                    <Text style={styles.text}> {items.id} </Text>
                                 </View>
                                 <View style={{ flexDirection: "row" }}>
                                     <Text style={styles.text}>Type: </Text>
