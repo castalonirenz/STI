@@ -83,7 +83,8 @@ class Sales extends Component {
         var convert
         let compute
         let str
-
+        var final
+       
         this.state.data.map((items, index) => (
             Total.push(items.total)
         ))
@@ -97,6 +98,8 @@ class Sales extends Component {
         if (newTotal.length > 0) {
             convert = newTotal.map(Number)
             compute = convert.reduce((a, b) => a + b, 0)
+            final = "₱"+compute.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            
         }
         return (
             <View style={{ flex: 1 }}>
@@ -170,7 +173,7 @@ class Sales extends Component {
                         <Button TouchablePress={this._onRefresh} TouchableStyle={{ marginTop: 20 }}>
                             Refresh
                             </Button>
-                        <Text style={{ fontSize: 26, fontWeight: 'bold', color: "#000" }}>Total Sales: {compute}</Text>
+                        <Text style={{ fontSize: 26, fontWeight: 'bold', color: "#000" }}>Total Sales: {final}</Text>
                         {this.state.data.map((items, key) => (
                             <View key={key} style={styles.data}>
 
