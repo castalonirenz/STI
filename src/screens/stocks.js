@@ -161,7 +161,17 @@ class stocks extends Component {
                                 </View>
                                 <View style={{ flexDirection: "row" }}>
                                     <Text style={styles.text}>size: </Text>
-                                    <Text style={styles.text}> {items.size} </Text>
+                                    <Text style={styles.text}> {items.size} {items.unit}</Text>
+                                </View>
+
+                                <View style={{ flexDirection: "row" }}>
+                                    <Text style={styles.text}>Discount: </Text>
+                                    <Text style={styles.text}> {items.discount}</Text>
+                                </View>
+
+                                <View style={{ flexDirection: "row" }}>
+                                    <Text style={styles.text}>Markup </Text>
+                                    <Text style={styles.text}> {items.markup}</Text>
                                 </View>
                             </View>
                         ))}

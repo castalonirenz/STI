@@ -98,7 +98,8 @@ class Sales extends Component {
         if (newTotal.length > 0) {
             convert = newTotal.map(Number)
             compute = convert.reduce((a, b) => a + b, 0)
-            final = "₱"+compute.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            fixed = compute.toFixed(3)
+            final = "₱"+fixed.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             
         }
         return (
@@ -203,7 +204,7 @@ class Sales extends Component {
                                 </View>
                                 <View style={{ flexDirection: "row" }}>
                                     <Text style={styles.text}>Size: </Text>
-                                    <Text style={styles.text}> {items.size} </Text>
+                                    <Text style={styles.text}> {items.size} {items.unit}</Text>
                                 </View>
                                 <View style={{ flexDirection: "row" }}>
                                     <Text style={styles.text}>Quantity: </Text>

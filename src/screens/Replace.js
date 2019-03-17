@@ -83,7 +83,7 @@ class Replace extends Component {
                                 </View>
                                 <View style={{ flexDirection: "row" }}>
                                     <Text style={styles.text}>Size: </Text>
-                                    <Text style={styles.text}> {items.size} </Text>
+                                    <Text style={styles.text}> {items.size} {items.unit}</Text>
                                 </View>
                                 <View style={{ flexDirection: "row" }}>
                                     <Text style={styles.text}>Quantity: </Text>
